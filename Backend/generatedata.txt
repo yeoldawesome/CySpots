@@ -1,0 +1,5 @@
+INSERT INTO `cyspots`.`spots` (`spot_name`, `location`, `description`, `image_url`)
+VALUES
+('John Doe', '1234567890', 'Hello, how are you?', '/uploads/robot1.png'),
+('Jane Smith', '0987654321', 'Meeting at 3 PM.', '/uploads/robot2.png'),
+('Alice Brown', '5551234567', 'Can we reschedule?', '/uploads/robot3.png');
