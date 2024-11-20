@@ -28,12 +28,11 @@ const SpotDetail = () => {
 
   return (
     <div className="container mt-4">
-      <h2 className="text-center">Spot Detail: {spot.spot_name}</h2>
+      <h2 className="text-center"> {spot.spot_name}</h2>
       <div className="card">
         <div className="card-body">
           <h5 className="card-title">{spot.spot_name}</h5>
           <h6 className="card-subtitle mb-2 text-muted">{spot.location}</h6>
-          <p className="card-text">{spot.description}</p>
           {spot.image_url && (
             <img
               src={`http://localhost:8081${spot.image_url}`}
@@ -41,6 +40,8 @@ const SpotDetail = () => {
               style={{ width: "100%", height: "auto", objectFit: "cover" }}
             />
           )}
+                    <p className="card-text">{spot.description}</p>
+
         </div>
       </div>
     </div>
