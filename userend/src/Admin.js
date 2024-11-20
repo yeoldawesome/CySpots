@@ -11,7 +11,7 @@ const Admin = () => {
   const [selectedSpot, setSelectedSpot] = useState(null); // Selected spot to edit
   const [newSpotName, setNewSpotName] = useState("");
   const [newLocation, setNewLocation] = useState("");
-  const [newMessage, setNewMessage] = useState("");
+  const [newDescription, setNewDescription] = useState(""); // Changed to description
   const [newImage, setNewImage] = useState(null);
   const [preview, setPreview] = useState(null);
 
@@ -61,7 +61,7 @@ const Admin = () => {
       setSelectedSpot(foundSpot);
       setNewSpotName(foundSpot.spot_name);
       setNewLocation(foundSpot.location);
-      setNewMessage(foundSpot.message);
+      setNewDescription(foundSpot.description); // Changed from message to description
       setPreview(`http://localhost:8081${foundSpot.image_url}`);
     } else {
       alert("Spot not found!");
@@ -75,7 +75,7 @@ const Admin = () => {
     const formData = new FormData();
     formData.append("spot_name", newSpotName);
     formData.append("location", newLocation);
-    formData.append("message", newMessage);
+    formData.append("description", newDescription); // Updated to use description
 
     // Only append the image if a new one is selected
     if (newImage) {
@@ -83,10 +83,13 @@ const Admin = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:8081/spots/${selectedSpot.id}`, {
-        method: "PUT",
-        body: formData,
-      });
+      const response = await fetch(
+        `http://localhost:8081/spots/${selectedSpot.id}`,
+        {
+          method: "PUT",
+          body: formData,
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -175,11 +178,12 @@ const Admin = () => {
                   />
                 </div>
                 <div className="mb-3">
-                  <label className="form-label">Message</label>
+                  <label className="form-label">Description</label>{" "}
+                  {/* Updated label */}
                   <textarea
                     className="form-control"
-                    value={newMessage}
-                    onChange={(e) => setNewMessage(e.target.value)}
+                    value={newDescription} // Changed to newDescription
+                    onChange={(e) => setNewDescription(e.target.value)} // Updated to description
                   ></textarea>
                 </div>
                 <div className="mb-3">
@@ -194,7 +198,11 @@ const Admin = () => {
                       src={preview}
                       alt="Preview"
                       className="mt-3"
-                      style={{ width: "100px", height: "100px", objectFit: "cover" }}
+                      style={{
+                        width: "100px",
+                        height: "100px",
+                        objectFit: "cover",
+                      }}
                     />
                   )}
                 </div>

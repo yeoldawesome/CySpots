@@ -47,7 +47,30 @@ app.get("/spots", (req, res) => {
   });
 });
 
-// Update a spot by ID
+
+
+
+app.get("/spots/:id", (req, res) => {
+  const spotsId = req.params.id; // Get the spot ID from the URL
+
+  // Query the database for the spot with the provided ID
+  db.query("SELECT * FROM spots WHERE id = ?", [spotsId], (err, result) => {
+    if (err) {
+      console.error("Error fetching spot:", err);
+      return res.status(500).send({ error: "Error fetching spot" });
+    }
+
+    if (result.length === 0) {
+      // If no spot found, return a 404 error
+      return res.status(404).send({ error: "Spot not found" });
+    }
+
+    // Send the spot data back in the response
+    res.status(200).send(result[0]); // Send the first spot found
+  });
+});
+
+
 app.put("/spots/:id", upload.single("image"), (req, res) => {
   const spotsId = req.params.id;
   const { spot_name, location, description } = req.body;
@@ -70,7 +93,7 @@ app.put("/spots/:id", upload.single("image"), (req, res) => {
 
     // Update the spot if it exists
     db.query(
-      "UPDATE spots SET spots_name = ?, location = ?, description = ?, image_url = ? WHERE id = ?",
+      "UPDATE spots SET spot_name = ?, location = ?, description = ?, image_url = ? WHERE id = ?",
       [spot_name, location, description, image_url, spotsId],
       (err, result) => {
         if (err) {
@@ -83,6 +106,7 @@ app.put("/spots/:id", upload.single("image"), (req, res) => {
     );
   });
 });
+
 
 // Delete a spot by ID
 app.delete("/spots/:id", (req, res) => {
