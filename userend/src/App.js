@@ -11,6 +11,7 @@ function App() {
   return (
     <Router>
       <div className="d-flex">
+        <Sidebar />
         <div className="flex-grow-1 p-3">
           <h1 className="text-center">Phone Contacts App</h1>
           <Routes>

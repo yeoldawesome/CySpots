@@ -5,7 +5,7 @@ const Contacts = ({ contacts, setContacts }) => {
   useEffect(() => {
     const fetchContacts = async () => {
       try {
-        const response = await fetch("http://localhost:8081/contact");
+        const response = await fetch("http://localhost:8081/spots");
         if (!response.ok) {
           throw new Error("Failed to fetch contacts");
         }

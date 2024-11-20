@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const AddContact = () => {
-  const [contactName, setContactName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
+const AddSpot = () => {
+  const [spotName, setspotName] = useState("");
+  const [location, setLocation] = useState("");
   const [message, setMessage] = useState("");
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
@@ -18,13 +18,13 @@ const AddContact = () => {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append("contact_name", contactName);
-    formData.append("phone_number", phoneNumber);
+    formData.append("spot_name", spotName);
+    formData.append("location", location);
     formData.append("message", message);
     formData.append("image", image); 
 
     try {
-      const response = await fetch("http://localhost:8081/contact", {
+      const response = await fetch("http://localhost:8081/spots", {
         method: "POST",
         body: formData, 
       });
@@ -41,8 +41,8 @@ const AddContact = () => {
     }
 
     // Clear form fields
-    setContactName("");
-    setPhoneNumber("");
+    setspotName("");
+    setLocation("");
     setMessage("");
     setImage(null);
     setPreview(null);
@@ -57,8 +57,8 @@ const AddContact = () => {
           <input
             type="text"
             className="form-control"
-            value={contactName}
-            onChange={(e) => setContactName(e.target.value)}
+            value={spotName}
+            onChange={(e) => setspotName(e.target.value)}
             required
           />
         </div>
@@ -67,8 +67,8 @@ const AddContact = () => {
           <input
             type="text"
             className="form-control"
-            value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
             required
           />
         </div>
@@ -104,4 +104,4 @@ const AddContact = () => {
   );
 };
 
-export default AddContact;
+export default AddSpot;
