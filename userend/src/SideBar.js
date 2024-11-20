@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+
 const Sidebar = () => {
   return (
     <div
@@ -14,17 +15,23 @@ const Sidebar = () => {
           </Link>
         </li>
         <li className="nav-item">
-          <Link to="/contacts" className="nav-link text-dark">
-            View Contacts
+          <Link to="/spots" className="nav-link text-dark">
+            View Spots
           </Link>
         </li>
         <li className="nav-item">
-          <Link to="/add-contact" className="nav-link text-dark">
-            Add Contact
+          <Link to="/add-spot" className="nav-link text-dark">
+            Add Spot
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link to="/admin" className="nav-link text-dark"> {/* New link to Admin */}
+            Admin
           </Link>
         </li>
       </ul>
     </div>
   );
 };
+
 export default Sidebar;

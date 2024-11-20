@@ -2,28 +2,31 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Sidebar from "./SideBar"; 
-import AddContact from "./AddContact"; 
-import Contacts from "./Contacts"; 
+import AddSpot from "./AddSpots";  // Import AddSpot (renamed)
+import Spots from "./Spots";  // Import Spots instead of Contacts
+import Admin from "./Admin";  // Import Admin component
 
 function App() {
-  const [contacts, setContacts] = useState([]);
+  const [spots, setSpots] = useState([]);  // Changed to spots
 
   return (
     <Router>
       <div className="d-flex">
         <Sidebar />
         <div className="flex-grow-1 p-3">
-          <h1 className="text-center">Phone Contacts App</h1>
+          <h1 className="text-center">Spots App</h1> {/* Changed heading */}
           <Routes>
-            <Route path="/" element={<div>Welcome to the Contacts App!</div>} />
+            <Route path="/" element={<div>Welcome to the Spots App!</div>} />
             <Route
-              path="/contacts"
-              element={<Contacts contacts={contacts} setContacts={setContacts} />}
+              path="/spots"  // Updated path to /spots
+              element={<Spots spots={spots} setSpots={setSpots} />} // Pass spots to the Spots component
             />
             <Route
-              path="/add-contact"
-              element={<AddContact />}
+              path="/add-spot"  // Updated route path to /add-spot
+              element={<AddSpot />}  // Use AddSpot for adding spots
             />
+           <Route path="/admin" element={<Admin />} /> {/* New route for Admin */}
+
           </Routes>
         </div>
       </div>
