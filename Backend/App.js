@@ -36,6 +36,27 @@ if (!fs.existsSync("uploads")) {
   fs.mkdirSync("uploads");
 }
 
+app.post("/spots", upload.single("image"), (req, res) => {
+  const { spot_name, location, description } = req.body;
+  const image_url = req.file ? "/uploads/" + req.file.filename : null;
+
+  if (!spot_name || !location || !description) {
+    return res.status(400).json({ error: "Missing required fields" });
+  }
+
+  db.query(
+    "INSERT INTO spots (spot_name, location, description, image_url) VALUES (?, ?, ?, ?)",
+    [spot_name, location, description, image_url],
+    (err, result) => {
+      if (err) {
+        console.error("Error inserting spot:", err);
+        return res.status(500).json({ error: "Error inserting spot" });
+      }
+      res.status(201).json({ message: "Spot added successfully!" });
+    }
+  );
+});
+
 // Fetch all spots
 app.get("/spots", (req, res) => {
   db.query("SELECT * FROM spots", (err, result) => {
@@ -106,6 +127,7 @@ app.put("/spots/:id", upload.single("image"), (req, res) => {
     );
   });
 });
+
 
 
 // Delete a spot by ID

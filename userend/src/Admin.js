@@ -6,12 +6,12 @@ const Admin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [spotName, setSpotName] = useState(""); // Spot name input for search
-  const [spots, setSpots] = useState([]); // List of spots to display
-  const [selectedSpot, setSelectedSpot] = useState(null); // Selected spot to edit
+  const [spotName, setSpotName] = useState("");
+  const [spots, setSpots] = useState([]);
+  const [selectedSpot, setSelectedSpot] = useState(null);
   const [newSpotName, setNewSpotName] = useState("");
   const [newLocation, setNewLocation] = useState("");
-  const [newDescription, setNewDescription] = useState(""); // Changed to description
+  const [newDescription, setNewDescription] = useState("");
   const [newImage, setNewImage] = useState(null);
   const [preview, setPreview] = useState(null);
 
@@ -44,13 +44,20 @@ const Admin = () => {
     }
   }, [isAuthenticated]);
 
-  // Handle image change
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    setNewImage(file);
-    setPreview(URL.createObjectURL(file));
+    
+    if (file) {
+      // If a new image is selected, update newImage and the preview
+      setNewImage(file);
+      setPreview(URL.createObjectURL(file)); // Show the preview of the new image
+    } else {
+      // If no file is selected, clear the image and preview
+      setNewImage(`http://localhost:8081${selectedSpot.image_url}`);
+      setPreview(null);
+    }
   };
-
+  
   // Handle search functionality for spots by name
   const handleSearch = (e) => {
     e.preventDefault();
@@ -61,7 +68,7 @@ const Admin = () => {
       setSelectedSpot(foundSpot);
       setNewSpotName(foundSpot.spot_name);
       setNewLocation(foundSpot.location);
-      setNewDescription(foundSpot.description); // Changed from message to description
+      setNewDescription(foundSpot.description);
       setPreview(`http://localhost:8081${foundSpot.image_url}`);
     } else {
       alert("Spot not found!");
@@ -75,13 +82,13 @@ const Admin = () => {
     const formData = new FormData();
     formData.append("spot_name", newSpotName);
     formData.append("location", newLocation);
-    formData.append("description", newDescription); // Updated to use description
+    formData.append("description", newDescription);
 
     // Only append the image if a new one is selected
     if (newImage) {
       formData.append("image", newImage);
     }
-
+    
     try {
       const response = await fetch(
         `http://localhost:8081/spots/${selectedSpot.id}`,
@@ -178,12 +185,11 @@ const Admin = () => {
                   />
                 </div>
                 <div className="mb-3">
-                  <label className="form-label">Description</label>{" "}
-                  {/* Updated label */}
+                  <label className="form-label">Description</label>
                   <textarea
                     className="form-control"
-                    value={newDescription} // Changed to newDescription
-                    onChange={(e) => setNewDescription(e.target.value)} // Updated to description
+                    value={newDescription}
+                    onChange={(e) => setNewDescription(e.target.value)}
                   ></textarea>
                 </div>
                 <div className="mb-3">
@@ -193,16 +199,21 @@ const Admin = () => {
                     className="form-control"
                     onChange={handleImageChange}
                   />
+                  {/* Display the previous image if no new image is selected */}
                   {preview && (
                     <img
                       src={preview}
                       alt="Preview"
                       className="mt-3"
-                      style={{
-                        width: "100px",
-                        height: "100px",
-                        objectFit: "cover",
-                      }}
+                      style={{ width: "100px", height: "100px", objectFit: "cover" }}
+                    />
+                  )}
+                  {!newImage && selectedSpot.image_url && (
+                    <img
+                      src={`http://localhost:8081${selectedSpot.image_url}`}
+                      alt="Current Spot"
+                      className="mt-3"
+                      style={{ width: "100px", height: "100px", objectFit: "cover" }}
                     />
                   )}
                 </div>

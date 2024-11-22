@@ -27,21 +27,27 @@ const SpotDetail = () => {
   }
 
   return (
-    <div className="container mt-4">
-      <h2 className="text-center"> {spot.spot_name}</h2>
+    <div
+      className="d-flex justify-content-center align-items-center"
+    >
       <div className="card">
         <div className="card-body">
-          <h5 className="card-title">{spot.spot_name}</h5>
+          <h2 className="card-title">{spot.spot_name}</h2>
           <h6 className="card-subtitle mb-2 text-muted">{spot.location}</h6>
           {spot.image_url && (
             <img
               src={`http://localhost:8081${spot.image_url}`}
               alt={spot.spot_name}
-              style={{ width: "100%", height: "auto", objectFit: "cover" }}
+              style={{
+                maxWidth: "100%",  // Image scales with container width
+                maxHeight: "400px",  // Limits the image height
+                height: "auto",  // Maintains aspect ratio
+                objectFit: "contain",  // Scales the image while keeping aspect ratio
+              }}
             />
           )}
-                    <p className="card-text">{spot.description}</p>
-
+          {/* Center the description text only */}
+          <p className="card-text text-center">{spot.description}</p>
         </div>
       </div>
     </div>
