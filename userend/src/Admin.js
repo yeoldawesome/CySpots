@@ -46,7 +46,7 @@ const Admin = () => {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    
+
     if (file) {
       // If a new image is selected, update newImage and the preview
       setNewImage(file);
@@ -57,7 +57,7 @@ const Admin = () => {
       setPreview(null);
     }
   };
-  
+
   // Handle search functionality for spots by name
   const handleSearch = (e) => {
     e.preventDefault();
@@ -74,7 +74,8 @@ const Admin = () => {
       alert("Spot not found!");
     }
   };
-
+  
+  
   // Handle update of selected spot
   const handleUpdateSpot = async (e) => {
     e.preventDefault();
@@ -88,7 +89,7 @@ const Admin = () => {
     if (newImage) {
       formData.append("image", newImage);
     }
-    
+
     try {
       const response = await fetch(
         `http://localhost:8081/spots/${selectedSpot.id}`,
@@ -109,7 +110,27 @@ const Admin = () => {
       alert("An error occurred: " + err);
     }
   };
+const handleDeleteSpot = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:8081/spots/${selectedSpot.id}`,
+        {
+          method: "DELETE",
+        }
+      );
 
+      if (!response.ok) {
+        const errorData = await response.json();
+        alert("Error: " + errorData.error);
+      } else {
+        alert("Spot deleted successfully!");
+        setSpots(spots.filter(spot => spot.id !== selectedSpot.id)); // Remove deleted spot from list
+        navigate("/spots");
+      }
+    } catch (err) {
+      alert("An error occurred: " + err);
+    }
+  };
   return (
     <div className="container mt-4">
       {!isAuthenticated ? (
@@ -205,7 +226,11 @@ const Admin = () => {
                       src={preview}
                       alt="Preview"
                       className="mt-3"
-                      style={{ width: "100px", height: "100px", objectFit: "cover" }}
+                      style={{
+                        width: "100px",
+                        height: "100px",
+                        objectFit: "cover",
+                      }}
                     />
                   )}
                   {!newImage && selectedSpot.image_url && (
@@ -213,7 +238,11 @@ const Admin = () => {
                       src={`http://localhost:8081${selectedSpot.image_url}`}
                       alt="Current Spot"
                       className="mt-3"
-                      style={{ width: "100px", height: "100px", objectFit: "cover" }}
+                      style={{
+                        width: "100px",
+                        height: "100px",
+                        objectFit: "cover",
+                      }}
                     />
                   )}
                 </div>
@@ -221,6 +250,10 @@ const Admin = () => {
                   Update Spot
                 </button>
               </form>
+
+              <button className="btn btn-primary" onClick={handleDeleteSpot}>
+                Delete Spot
+              </button>
             </div>
           )}
         </div>
