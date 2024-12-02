@@ -128,7 +128,38 @@ app.put("/spots/:id", upload.single("image"), (req, res) => {
   });
 });
 
+app.post("/spots/login", (req, res) => {
+  const { username, password } = req.body;
+  if (!username || !password) {
+    return res
+      .status(400)
+      .send({ error: "Username and password are required." });
+  }
+  const query = "SELECT role FROM user WHERE user = ? AND password = ?";
 
+  try {
+    db.query(query, [username, password], (err, results) => {
+      if (err) {
+        console.error("Database error during login:", err);
+        return res
+          .status(500)
+          .send({ error: "An error occurred in Query. Please try again." });
+      }
+      if (results.length === 0) {
+        return res.status(401).send({ error: "Invalid username or password." });
+      }
+      // If there is not any error, respond with code and role
+      const { role } = results[0];
+      res.status(200).send({ role });
+    });
+  } catch (err) {
+    // Handle synchronous errors
+    console.error("Error in GET /spots/login", err);
+    res
+      .status(500)
+      .send({ error: "An unexpected error occurred in Login: " + err.message });
+  }
+});
 
 // Delete a spot by ID
 app.delete("/spots/:id", (req, res) => {

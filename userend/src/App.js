@@ -13,6 +13,7 @@ function App() {
   return (
     <Router>
       <div className="d-flex">
+        
         <Sidebar />
         <div className="flex-grow-1 p-3">
           <h1 className="text-center">CySpots</h1> {/* Changed heading */}

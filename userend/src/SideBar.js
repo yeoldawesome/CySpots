@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Sidebar = () => {
+const Sidebar = ({ userRole }) => {
   return (
     <div
       className="d-flex flex-column vh-100 p-3 bg-light"
@@ -24,11 +24,18 @@ const Sidebar = () => {
             Add Spot
           </Link>
         </li>
-        <li className="nav-item">
+       
+        {userRole === "admin" && (
+          <>
+        
+          <li className="nav-item">
           <Link to="/admin" className="nav-link text-dark"> {/* New link to Admin */}
             Admin
           </Link>
         </li>
+     
+          </>
+        )}
       </ul>
     </div>
   );
