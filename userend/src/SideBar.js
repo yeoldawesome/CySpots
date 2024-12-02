@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
 const Sidebar = ({ userRole }) => {
   return (
     <div
@@ -24,16 +23,13 @@ const Sidebar = ({ userRole }) => {
             Add Spot
           </Link>
         </li>
-       
         {userRole === "admin" && (
           <>
-        
           <li className="nav-item">
           <Link to="/admin" className="nav-link text-dark"> {/* New link to Admin */}
             Admin
           </Link>
         </li>
-     
           </>
         )}
       </ul>
