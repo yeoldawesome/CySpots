@@ -103,9 +103,11 @@ app.put("/spots/:id", upload.single("image"), (req, res) => {
       return res.status(404).send({ error: "Spot not found" });
     }
 
+    const updatedImageUrl = image_url || result[0].image_url;
+
     db.query(
       "UPDATE spots SET spot_name = ?, location = ?, description = ?, image_url = ? WHERE id = ?",
-      [spot_name, location, description, image_url, spotsId],
+      [spot_name, location, description, updatedImageUrl, spotsId],
       (err, result) => {
         if (err) {
           console.error("Error updating spot:", err);
