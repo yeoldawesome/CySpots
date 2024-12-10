@@ -31,16 +31,15 @@ const AddSpot = () => {
   
       if (!response.ok) {
         const errorData = await response.json(); 
-        alert("Error: " + errorData.error);
+        alert("Error adding spot: " + errorData.error);
       } else {
         const successMessage = await response.text(); 
-        alert(successMessage);
+        alert("Spot added successfully");
       }
     } catch (err) {
       alert("An error occurred: " + err);
     }
 
-    // Clear form fields after submission
     setSpotName("");
     setLocation("");
     setDescription("");
@@ -50,10 +49,10 @@ const AddSpot = () => {
   
   return (
     <div className="container mt-4">
-      <h2 className="text-center">Add New Spot</h2> {/* Title */}
+      <h2 className="text-center">Add New Spot</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label className="form-label">Spot Name</label> {/* Label for spot name */}
+          <label className="form-label">Spot Name</label>
           <input
             type="text"
             className="form-control"
@@ -63,7 +62,7 @@ const AddSpot = () => {
           />
         </div>
         <div className="mb-3">
-          <label className="form-label">Location</label> {/* Label for location */}
+          <label className="form-label">Location</label>
           <input
             type="text"
             className="form-control"
