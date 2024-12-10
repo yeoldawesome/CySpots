@@ -1,44 +1,52 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Sidebar from "./SideBar";
-import AddSpot from "./AddSpots";  // Import AddSpot (renamed)
-import Spots from "./Spots";  // Import Spots instead of Contacts
-import Admin from "./Admin";  // Import Admin component
-import SpotDetail from "./SpotDetail"; // Import SpotDetail
+import Sidebar from "./Sidebar";
+import AddSpot from "./AddSpots";
+import Spots from "./Spots";
+import SpotDetail from "./SpotDetail";
+import Admin from "./Admin";
+import AdminEditSpot from "./AdminEditSpot";
+import SearchSpot from "./SearchSpot";
 
 function App() {
-  const [spots, setSpots] = useState([]);  // Changed to spots
+  const [spots, setSpots] = useState([]);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   return (
-    
     <Router>
+      <Helmet>
+        <title>CySpots</title>
+      </Helmet>
       <div className="d-flex">
-        <Sidebar />
+        <Sidebar isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
         <div className="flex-grow-1 p-3">
-          <h1 className="text-center">CySpots</h1> {/* Changed heading */}
+          <h1 className="text-center">CySpots</h1>
           <Routes>
-            {/* Home Page */}
             <Route
               path="/"
               element={
-                <div className="text-center">
-                  <h2>Welcome to CySpots!</h2>
-                  <p>Your go-to platform for discovering cool spots around Iowa State University. Explore, add, and update your favorite spots!</p>
+                <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "80vh" }}>
+                  <div className="text-center">
+                    <h2>Welcome to CySpots!</h2>
+                    <p>Your go-to platform for discovering cool spots around Iowa State University. Explore, add, and update your favorite spots!</p>
+                  </div>
                 </div>
               }
             />
-            {/* Spots Page */}
             <Route
-              path="/spots"  // Updated path to /spots
-              element={<Spots spots={spots} setSpots={setSpots} />} // Pass spots to the Spots component
+              path="/spots"
+              element={<Spots spots={spots} setSpots={setSpots} isAuthenticated={isAuthenticated} />}
             />
+            <Route path="/add-spot" element={<AddSpot />} />
+            <Route path="/login" element={<Admin isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />} />
             <Route
-              path="/add-spot"  // Updated route path to /add-spot
-              element={<AddSpot />}  // Use AddSpot for adding spots
+              path="/admin/spot/:id"
+              element={isAuthenticated ? <AdminEditSpot /> : <Navigate to="/login" />}
             />
-            <Route path="/admin" element={<Admin />} /> {/* New route for Admin */}
-            <Route path="/spot/:id" element={<SpotDetail />} /> {/* Route for individual spot */}
+            <Route path="/spot/:id" element={<SpotDetail />} />
+            <Route path="/search" element={<SearchSpot isAuthenticated={isAuthenticated} />} />
           </Routes>
         </div>
       </div>
