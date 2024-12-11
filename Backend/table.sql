@@ -9,7 +9,6 @@ CREATE TABLE IF NOT EXISTS `cyspots`.`spots` (
     `spot_name` VARCHAR(255) NOT NULL,
     `location` VARCHAR(255) NOT NULL,
     `description` TEXT,
-    `message_timestamp` DATETIME DEFAULT CURRENT_TIMESTAMP,
     `image_url` VARCHAR(255),
     PRIMARY KEY (`id`)
 );
@@ -29,6 +28,6 @@ CREATE TABLE IF NOT EXISTS `cyspots`.`users` (
     PRIMARY KEY (`id`)
 );
 
-INSERT INTO `cyspots`.`users` (`username`, `password`)
+INSERT INTO `cyspots`.`users` (`username`, `password`, `role`)
 VALUES 
-('admin', 'admin');
+('admin', 'admin', 'admin');
