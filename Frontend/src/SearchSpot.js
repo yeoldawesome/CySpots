@@ -22,7 +22,7 @@ const SearchSpot = ({ isAuthenticated }) => {
   const handleSearch = (e) => {
     e.preventDefault();
     const found = spots.find(
-      (spot) => spot.spot_name.toLowerCase() === spotName.toLowerCase()
+      (spot) => spot.spot_name.contains(spotName)
     );
     if (found) {
       setFoundSpot(found);

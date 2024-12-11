@@ -120,7 +120,7 @@ app.put("/spots/:id", upload.single("image"), (req, res) => {
   });
 });
 
-app.post("/spots/login", (req, res) => {
+app.post("/login", (req, res) => {
   const { username, password } = req.body;
   if (!username || !password) {
     return res
@@ -144,7 +144,7 @@ app.post("/spots/login", (req, res) => {
       res.status(200).send({ role });
     });
   } catch (err) {
-    console.error("Error in GET /spots/login", err);
+    console.error("Error in GET /login", err);
     res
       .status(500)
       .send({ error: "An unexpected error occurred in Login: " + err.message });
