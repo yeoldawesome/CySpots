@@ -8,12 +8,12 @@ const Spots = ({ spots, setSpots, isAuthenticated }) => {
       try {
         const response = await fetch("http://localhost:8081/spots");
         if (!response.ok) {
-          throw new Error("Failed to fetch spots");
+          throw new Error("Failed to fetchspots");
         }
         const data = await response.json();
         setSpots(data);
       } catch (error) {
-        alert("There was an error loading spots: " + error);
+        alert("There was an erro loading spots: " + error);
       }
     };
     fetchSpots();

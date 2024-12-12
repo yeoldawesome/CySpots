@@ -1,0 +1,17 @@
+runtime: nodejs18
+service: frontend  # Service name for the frontend
+
+instance_class: F2
+
+handlers:
+  - url: /static  # Serve static files
+    static_dir: static
+
+  - url: /.*  # Redirect all other routes to the main HTML file (for single-page apps)
+    static_files: static/index.html
+    upload: static/index.html
+
+automatic_scaling:
+  target_cpu_utilization: 0.65
+  min_instances: 1
+  max_instances: 5

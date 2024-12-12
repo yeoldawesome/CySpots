@@ -1,0 +1,20 @@
+runtime: nodejs18
+service: backend  # Service name for the backend
+
+instance_class: F2  # Adjust instance size based on your needs
+
+env_variables:
+  NODE_ENV: production
+  DB_HOST: /cloudsql/cyspots-444416:us-central1:cyspotdb
+  DB_USER: admin
+  DB_PASS: admin
+  DB_NAME: cyspots
+
+handlers:
+  - url: /.*  # Routes all requests to the backend
+    script: auto
+
+automatic_scaling:
+  target_cpu_utilization: 0.65
+  min_instances: 1
+  max_instances: 5
