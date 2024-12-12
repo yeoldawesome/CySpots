@@ -14,12 +14,14 @@ app.use(express.json());
 app.use(express.static("public"));
 app.use("/uploads", express.static("uploads"));
 
-const db = mysql.createConnection({
-  host: "127.0.0.1",
-  user: "root",
-  password: "password",
-  database: "cyspots",
-});
+const dbConfig = {
+  host: '34.67.207.98', // Replace with your Cloud SQL instance public IP
+  port: 3306,               // Default MySQL port
+  user: 'admin',            // Your database username
+  password: 'admin',        // Your database password
+  database: 'cyspots',      // Your database name
+};
+const db = mysql.createConnection(dbConfig);
 
 // Multer storage configuration for image upload
 const storage = multer.diskStorage({
