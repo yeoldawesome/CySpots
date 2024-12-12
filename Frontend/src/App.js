@@ -22,7 +22,24 @@ function App() {
       <div className="d-flex">
         <Sidebar isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
         <div className="flex-grow-1 p-3">
-          <h1 className="text-center">CySpots</h1>
+          <div className="row mb-4">
+            <div className="col-12 position-relative">
+              <div className="d-flex justify-content-center">
+                <h1 className="mb-0">CySpots</h1>
+              </div>
+              <img
+                src="/CySpots.png"
+                alt="CySpots Logo"
+                style={{ 
+                  width: "55px",
+                  height: "auto",
+                  top: "0",
+                  right: "0",
+                  marginRight: "10px",
+                  position: "absolute"}}
+              />
+            </div>
+          </div>
           <Routes>
             <Route
               path="/"
